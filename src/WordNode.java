@@ -52,7 +52,7 @@ public class WordNode implements Comparable<WordNode>{
 
     @Override
     public String toString() {
-        return word + '\'';
+        return word;
     }
 
     @Override

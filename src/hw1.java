@@ -25,7 +25,7 @@ public class hw1 {
 
         explored.add(A);
 
-        ArrayList<WordNode> frontier = new ArrayList<>(A.GetNeighbors());
+        PriorityQueue<WordNode> frontier = new PriorityQueue<>(A.GetNeighbors());
 
         WordNode Goal = new WordNode(word2, null, 999);
 
@@ -36,8 +36,9 @@ public class hw1 {
 
         while(beg < end && !reached){
 
-            A = frontier.get(beg);//head = queue[beg]
-
+            A = frontier.poll();//head = queue[beg]
+            explored.add(A);
+            assert A != null;
             ArrayList<WordNode> temp = A.GetNeighbors();
 
             for (WordNode w: temp //for each neighbor u that isn't explored
@@ -45,16 +46,20 @@ public class hw1 {
 
                 if(!exploredContains(explored, w)) {
 
-                    explored.add(w); //seen = true;
+                    frontier.add(w); //seen = true;
                     end++;
-                    if(w.equals(Goal)){
+                    if(w.word.equals(Goal.word)){
 
+                        explored.add(w);
                         reached = true;
+                        break;
 
                     }
                 }
 
-            }beg++;
+            }
+
+            beg++;
 
         }
 
@@ -88,7 +93,7 @@ public class hw1 {
         for (WordNode e: explored
              ) {
 
-            if(e.equals(w)) return true;
+            if(e.word.equals(w.word)) return true;
 
         }
 
