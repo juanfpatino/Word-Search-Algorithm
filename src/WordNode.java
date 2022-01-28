@@ -1,14 +1,16 @@
 import java.util.ArrayList;
 
-public class WordNode {
+public class WordNode implements Comparable<WordNode>{
 
     public String word;
     private ArrayList<String> dict = new ArrayList<>();
+    public int dist;
 
-    public WordNode(String word, ArrayList<String> dict){
+    public WordNode(String word, ArrayList<String> dict, int dist){
 
         this.word = word;
         this.dict = dict;
+        this.dist = dist;
 
     }
 
@@ -34,7 +36,7 @@ public class WordNode {
 
                 if(dict.contains(thisWord)){
 
-                    neighbors.add(new WordNode(thisWord, dict));
+                    neighbors.add(new WordNode(thisWord, dict, dist + 1));
 
                 }
 
@@ -51,6 +53,11 @@ public class WordNode {
     @Override
     public String toString() {
         return word + '\'';
+    }
+
+    @Override
+    public int compareTo(WordNode o) {
+        return dist;
     }
 }
 

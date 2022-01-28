@@ -1,18 +1,19 @@
 import javax.swing.*;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.io.*;
 
 public class hw1 {
 
-    public static void main(String[] args)throws IOException {//terrain.png, mpp.txt, redOut.png
+    public static void main(String[] args)throws IOException {
 
         File dictFile = new File(args[0]);
         String word1 = args[1];
         String word2 = args[2];
 
         Scanner s = new Scanner(dictFile);
-        ArrayList<String> dict = new ArrayList<>();//number of english words
+        ArrayList<String> dict = new ArrayList<>();
         String ss = s.nextLine();
         configDict(s, dict, ss);
 
@@ -20,30 +21,40 @@ public class hw1 {
 
         ArrayList<WordNode> explored = new ArrayList<>();
 
-        WordNode A = new WordNode(word1, dict);
+        WordNode A = new WordNode(word1, dict, 0);
 
         explored.add(A);
 
-        Queue<WordNode> frontier = new PriorityQueue<>();
+        ArrayList<WordNode> frontier = new ArrayList<>(A.GetNeighbors());
 
-        frontier.addAll(A.GetNeighbors());
-
-        WordNode Goal = new WordNode(word2, null);
+        WordNode Goal = new WordNode(word2, null, 999);
 
         boolean reached = false;
 
-        while(!frontier.isEmpty()){
+        int beg = 1;
+        int end = 2;
 
-            A = frontier.poll();
-            explored.add(A);
-            frontier.addAll(A.GetNeighbors());
+        while(beg < end && !reached){
 
-            if(A.equals(Goal)){
+            A = frontier.get(beg);//head = queue[beg]
 
-                reached = true;
-                break;
+            ArrayList<WordNode> temp = A.GetNeighbors();
 
-            }
+            for (WordNode w: temp //for each neighbor u that isn't explored
+                 ) {
+
+                if(!exploredContains(explored, w)) {
+
+                    explored.add(w); //seen = true;
+                    end++;
+                    if(w.equals(Goal)){
+
+                        reached = true;
+
+                    }
+                }
+
+            }beg++;
 
         }
 
@@ -67,6 +78,21 @@ public class hw1 {
 
 
 
+
+    }
+
+    private static boolean exploredContains(ArrayList<WordNode> explored, WordNode w){
+
+
+
+        for (WordNode e: explored
+             ) {
+
+            if(e.equals(w)) return true;
+
+        }
+
+        return false;
 
     }
 
