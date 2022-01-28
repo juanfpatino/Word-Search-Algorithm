@@ -10,7 +10,6 @@ public class hw1 {
         File dictFile = new File(args[0]);
         String word1 = args[1];
         String word2 = args[2];
-        int n = word1.length();
 
         Scanner s = new Scanner(dictFile);
         ArrayList<String> dict = new ArrayList<>();//number of english words
@@ -51,7 +50,7 @@ public class hw1 {
         if(reached){
 
             for (WordNode w:
-                 frontier) {
+                 explored) {
 
                 System.out.println(w);
 
