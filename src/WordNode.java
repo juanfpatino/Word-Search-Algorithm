@@ -5,6 +5,7 @@ public class WordNode implements Comparable<WordNode>{
     public String word;
     private ArrayList<String> dict = new ArrayList<>();
     public int dist;
+    private WordNode parent = null;
 
     public WordNode(String word, ArrayList<String> dict, int dist){
 
@@ -36,7 +37,9 @@ public class WordNode implements Comparable<WordNode>{
 
                 if(dict.contains(thisWord)){
 
-                    neighbors.add(new WordNode(thisWord, dict, dist + 1));
+                    WordNode neigh = new WordNode(thisWord, dict, dist + 1);
+                    neigh.setParent(this);
+                    neighbors.add(neigh);
 
                 }
 
@@ -47,6 +50,18 @@ public class WordNode implements Comparable<WordNode>{
 
         return neighbors;
 
+
+    }
+
+    public WordNode getParent(){
+
+        return parent;
+
+    }
+
+    public void setParent(WordNode p){
+
+        this.parent = p;
 
     }
 

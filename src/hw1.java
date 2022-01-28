@@ -34,6 +34,8 @@ public class hw1 {
         int beg = 1;
         int end = 2;
 
+        WordNode target = null;
+
         while(beg < end && !reached){
 
             A = frontier.poll();//head = queue[beg]
@@ -51,6 +53,7 @@ public class hw1 {
                     if(w.word.equals(Goal.word)){
 
                         explored.add(w);
+                        target = w;
                         reached = true;
                         break;
 
@@ -65,10 +68,21 @@ public class hw1 {
 
         if(reached){
 
-            for (WordNode w:
-                 explored) {
+            ArrayList<WordNode> path = new ArrayList<>();
 
-                System.out.println(w);
+            WordNode W = target;
+            path.add(W);
+
+            while(W.getParent()!= null){
+
+                W = W.getParent();
+                path.add(W);
+
+            }
+
+            for (int i = path.size()-1; i >= 0; i--) {
+
+                System.out.println(path.get(i));
 
             }
 
