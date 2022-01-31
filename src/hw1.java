@@ -6,7 +6,7 @@ import java.io.*;
 
 public class hw1 {
 
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException {
 
         File dictFile = new File(args[0]);
         String word1 = args[1];
@@ -36,21 +36,21 @@ public class hw1 {
 
         WordNode target = null;
 
-        while(beg < end && !reached){
+        while (beg < end && !reached) {
 
             A = frontier.poll();//head = queue[beg]
             explored.add(A);
             assert A != null;
             ArrayList<WordNode> temp = A.GetNeighbors();
 
-            for (WordNode w: temp //for each neighbor u that isn't explored
-                 ) {
+            for (WordNode w : temp //for each neighbor u that isn't explored
+            ) {
 
-                if(!exploredContains(explored, w)) {
+                if (!exploredContains(explored, w)) {
 
                     frontier.add(w); //seen = true;
                     end++;
-                    if(w.word.equals(Goal.word)){
+                    if (w.word.equals(Goal.word)) {
 
                         explored.add(w);
                         target = w;
@@ -66,48 +66,42 @@ public class hw1 {
 
         }
 
-        if(reached){
+        if (reached) {
 
             ArrayList<WordNode> path = new ArrayList<>();
 
             WordNode W = target;
             path.add(W);
 
-            while(W.getParent()!= null){
+            while (W.getParent() != null) {
 
                 W = W.getParent();
                 path.add(W);
 
             }
 
-            for (int i = path.size()-1; i >= 0; i--) {
+            for (int i = path.size() - 1; i >= 0; i--) {
 
                 System.out.println(path.get(i));
 
             }
 
-        }
-        else{
+        } else {
 
             System.out.println("No Solution");
 
         }
 
-        //add neighbors to frontier
-
-
-
 
     }
 
-    private static boolean exploredContains(ArrayList<WordNode> explored, WordNode w){
+    private static boolean exploredContains(ArrayList<WordNode> explored, WordNode w) {
 
 
+        for (WordNode e : explored
+        ) {
 
-        for (WordNode e: explored
-             ) {
-
-            if(e.word.equals(w.word)) return true;
+            if (e.word.equals(w.word)) return true;
 
         }
 
@@ -116,17 +110,17 @@ public class hw1 {
     }
 
     private static void configDict(Scanner s, List<String> dict, String ss) {
-        while(true){
+        while (true) {
 
             String word = ss;
 
             dict.add(word);
 
-            try{
+            try {
 
                 ss = s.nextLine();
 
-            }catch( NoSuchElementException E){
+            } catch (NoSuchElementException E) {
 
                 break;
 
